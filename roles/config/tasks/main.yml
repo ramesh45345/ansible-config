@@ -1,0 +1,29 @@
+---
+
+# all-pre-onetime.yml
+- name: Register all-pre-onetime.bak
+  stat: path=/var/tmp/all-pre-onetime.bak
+  register: allpreonetime
+- name: Tasks for all distros - one time
+  import_tasks: all-pre-onetime.yml
+  when: not allpreonetime.stat.exists
+
+- name: Machine config
+  import_tasks: machine.yml
+
+- name: Shell Config
+  import_tasks: shell.yml
+
+- name: Flatpak Config
+  import_tasks: flatpak.yml
+
+# https://stackoverflow.com/questions/28119521/ansible-include-task-only-if-file-exists
+# TODO: Include an external file if it exists. If possible, figure out relative referencing.
+
+# all-post-onetime.yml
+- name: Register all-post-onetime.bak
+  stat: path=/var/tmp/all-post-onetime.bak
+  register: allpostonetime
+- name: Tasks for all distros - one time
+  import_tasks: all-post-onetime.yml
+  when: not allpostonetime.stat.exists

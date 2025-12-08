@@ -1,0 +1,5 @@
+---
+
+- name: Run topgrade
+  shell: "topgrade -y --disable=firmware --disable=system --no-retry --skip-notify"
+  changed_when: false

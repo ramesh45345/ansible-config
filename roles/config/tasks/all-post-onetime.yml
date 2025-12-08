@@ -1,0 +1,23 @@
+---
+
+# Cxdgdirs.py
+- name: Cxdgdirs.py
+  shell: "{{ csfolder }}/Cxdgdirs.py"
+  changed_when: false
+
+# CMediaPlayerConfig.py
+- name: CMediaPlayerConfig.py
+  shell: "{{ csfolder }}/CMediaPlayerConfig.py"
+  changed_when: false
+  remote_user: "{{ normal_user }}"
+
+# Cvscode.py
+- name: Cvscode.py
+  shell: "{{ csfolder }}/Cvscode.py"
+  changed_when: false
+  remote_user: "{{ normal_user }}"
+
+- name: Create /var/tmp/all-post-onetime.bak
+  ansible.builtin.file:
+    path: /var/tmp/all-post-onetime.bak
+    state: touch

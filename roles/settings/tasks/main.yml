@@ -1,0 +1,16 @@
+---
+
+- name: Set username
+  command: id -nu 1000
+  register: normal_user
+  changed_when: false
+- set_fact: 
+    normal_user={{ normal_user.stdout }}
+
+# Set CustomScripts path
+- ansible.builtin.set_fact:
+    csfolder: '/var/opt/CustomScripts'
+  when: ansible_os_family == 'NixOS'
+- ansible.builtin.set_fact: 
+    csfolder: '/opt/CustomScripts'
+  when: ansible_os_family != 'NixOS'

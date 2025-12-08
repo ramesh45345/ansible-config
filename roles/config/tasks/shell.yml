@@ -1,0 +1,5 @@
+---
+
+- name: Run shell config
+  shell: "{{ csfolder }}/CShellConfig.py -z -f"
+  changed_when: false
