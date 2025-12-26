@@ -17,9 +17,6 @@
 - name: Flatpak Config
   import_tasks: flatpak.yml
 
-# https://stackoverflow.com/questions/28119521/ansible-include-task-only-if-file-exists
-# TODO: Include an external file if it exists. If possible, figure out relative referencing.
-
 # all-post-onetime.yml
 - name: Register all-post-onetime.bak
   stat: path=/var/tmp/all-post-onetime.bak
