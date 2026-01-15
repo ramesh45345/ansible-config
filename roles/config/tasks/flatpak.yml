@@ -1,0 +1,17 @@
+
+- name: Add flathub repo
+  community.general.flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+
+- name: Install common flatpaks
+  community.general.flatpak:
+    name:
+      - com.calibre_ebook.calibre
+      - com.github.tchx84.Flatseal
+      - info.smplayer.SMPlayer
+      - org.atheme.audacious
+      - org.libreoffice.LibreOffice
+      - org.videolan.VLC
+    state: latest
