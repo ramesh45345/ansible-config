@@ -3,4 +3,4 @@
 - name: Set timezone to US/Eastern
   timezone:
     name: US/Eastern
-  when: ansible_os_family != 'NixOS'
+  when: os_family != 'NixOS'

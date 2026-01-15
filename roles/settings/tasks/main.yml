@@ -4,13 +4,21 @@
   command: id -nu 1000
   register: normal_user
   changed_when: false
-- set_fact: 
-    normal_user={{ normal_user.stdout }}
+
+- name: Set facts
+  ansible.builtin.set_fact:
+    normal_user: "{{ normal_user.stdout }}"
+    distribution: "{{ ansible_facts['distribution'] }}"
+    os_family: "{{ ansible_facts['os_family'] }}"
+    distro_version: "{{ ansible_facts['distribution_version'] }}"
+    pkgmgr: "{{ ansible_facts['pkg_mgr'] }}"
+    virt_role: "{{ ansible_facts['virtualization_role'] }}"
+    virt_type: "{{ ansible_facts['virtualization_type'] }}"
 
 # Set CustomScripts path
 - ansible.builtin.set_fact:
     csfolder: '/var/opt/CustomScripts'
-  when: ansible_os_family == 'NixOS'
+  when: os_family == 'NixOS'
 - ansible.builtin.set_fact: 
     csfolder: '/opt/CustomScripts'
-  when: ansible_os_family != 'NixOS'
+  when: os_family != 'NixOS'
