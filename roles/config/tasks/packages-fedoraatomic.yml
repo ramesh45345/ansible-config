@@ -1,0 +1,33 @@
+---
+
+- name: RPM Fusion repo
+  community.general.rpm_ostree_pkg: name={{ item }}
+                                    state=present
+                                    apply_live=true
+  with_items:
+    - http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ distro_version }}.noarch.rpm
+    - http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ distro_version }}.noarch.rpm
+
+- name: Terra repo
+  ansible.builtin.get_url:
+    url: https://github.com/terrapkg/subatomic-repos/raw/main/terra.repo
+    dest: /etc/yum.repos.d/terra.repo
+
+- name: Install packages
+  community.general.rpm_ostree_pkg:
+    name:
+      - cups-pdf
+      - fish
+      - google-roboto-fonts
+      - numix-icon-theme
+      - numix-icon-theme-circle
+      - powerline-fonts
+      - syncthing
+      - tmux
+      - zsh
+    state: present
+    apply_live: true
+  register: rpm_ostree_pkg
+  until: rpm_ostree_pkg is not failed
+  retries: 10
+  delay: 10

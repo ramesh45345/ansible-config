@@ -1,0 +1,17 @@
+---
+
+# all-pre-onetime.yml
+- name: Register all-pre-onetime.bak
+  stat: path=/var/tmp/all-pre-onetime.bak
+  register: allpreonetime
+- name: Tasks for all distros - one time
+  import_tasks: all-pre-onetime.yml
+  when: not allpreonetime.stat.exists
+
+# all-post-onetime.yml
+- name: Register all-post-onetime.bak
+  stat: path=/var/tmp/all-post-onetime.bak
+  register: allpostonetime
+- name: Tasks for all distros - one time
+  import_tasks: all-post-onetime.yml
+  when: not allpostonetime.stat.exists

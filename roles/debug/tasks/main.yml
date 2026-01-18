@@ -13,10 +13,10 @@
 - name: Print some debug information 
   vars:
     msg: |
-        ansible_distribution: {{ distribution }}
-        ansible_os_family: {{ os_family }}
-        ansible_distribution_version: {{ distro_version }}
-        ansible_pkg_mgr: {{ pkgmgr }}
+        distribution: {{ distribution }}
+        os_family: {{ os_family }}
+        distro_version: {{ distro_version }}
+        pkgmgr: {{ pkgmgr }}
         ansible_user: {{ ansible_facts['user_id'] }}
         normal_user: {{ normal_user }}
         datetime: {{ ansible_facts['date_time'].date }} {{ ansible_facts['date_time'].time }} , isodate: {{ ansible_facts['date_time'].iso8601 }}
