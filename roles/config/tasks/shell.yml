@@ -3,5 +3,3 @@
 - name: Run shell config
   shell: "{{ csfolder }}/CShellConfig.py -z -f"
   changed_when: false
-  async: 60
-  poll: 5

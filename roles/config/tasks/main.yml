@@ -4,6 +4,9 @@
   import_tasks: packages-fedoraatomic.yml
   when: pkgmgr == 'atomic_container' and distribution == 'Fedora'
 
+- name: CustomScripts
+  import_tasks: ccs.yml
+
 - name: OS Settings
   import_tasks: settings.yml
 

@@ -5,14 +5,9 @@
     repo: https://github.com/ramesh45345/CustomScripts
     dest: "{{ csfolder }}"
     clone: yes
-    update: no
+    update: yes
 
 # CCSClone.py
 - name: CCSClone.py
   shell: "{{ csfolder }}/CCSClone.py"
   changed_when: false
-
-- name: Create /var/tmp/all-pre-onetime.bak
-  ansible.builtin.file:
-    path: /var/tmp/all-pre-onetime.bak
-    state: touch

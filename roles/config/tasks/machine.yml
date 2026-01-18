@@ -1,6 +1,0 @@
----
-
-- name: Set timezone to US/Eastern
-  timezone:
-    name: US/Eastern
-  when: os_family != 'NixOS'
