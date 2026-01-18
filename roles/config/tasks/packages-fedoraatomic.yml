@@ -13,21 +13,85 @@
     url: https://github.com/terrapkg/subatomic-repos/raw/main/terra.repo
     dest: /etc/yum.repos.d/terra.repo
 
+- name: VSCodium repo
+  copy:
+    dest: /etc/yum.repos.d/vscodium.repo
+    content: |
+      [gitlab.com_paulcarroty_vscodium_repo]
+      name=gitlab.com_paulcarroty_vscodium_repo
+      baseurl=https://paulcarroty.gitlab.io/vscodium-deb-rpm-repo/rpms/
+      enabled=1
+      gpgcheck=1
+      repo_gpgcheck=1
+      gpgkey=https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg
+      metadata_expire=1h
+
 - name: Install packages
   community.general.rpm_ostree_pkg:
     name:
+      - codium
       - cups-pdf
+      - dconf-editor
       - fish
+      - gnome-disk-utility
+      - gnome-system-monitor
       - google-roboto-fonts
       - numix-icon-theme
       - numix-icon-theme-circle
       - powerline-fonts
+      - rpmfusion-free-release-tainted
+      - rpmfusion-nonfree-release-tainted
+      - starship
       - syncthing
+      - terra-release
       - tmux
       - zsh
+      ### qemu
+      - libvirt-daemon-config-network
+      - libvirt-daemon-kvm
+      - qemu-kvm
+      - swtpm
+      - swtpm-tools
+      - virt-install
+      - virt-manager
+      ### intel libva
+      - intel-media-driver
+      - libva-intel-driver
     state: present
     apply_live: true
   register: rpm_ostree_pkg
   until: rpm_ostree_pkg is not failed
   retries: 10
   delay: 10
+
+- name: Install bare-metal packages
+  community.general.rpm_ostree_pkg:
+    name:
+      - lm_sensors
+      - smartmontools
+      - xsensors
+    state: present
+    apply_live: true
+  register: rpm_ostree_pkg
+  until: rpm_ostree_pkg is not failed
+  retries: 10
+  delay: 10
+  when: virt_role != 'guest'
+
+- name: Enable systemd services
+  ansible.builtin.systemd_service: name={{ item }}
+                                   enabled=true
+                                   state=started
+  with_items:
+    - smb
+
+- name: Check if freeworld is installed
+  shell: rpm -q mesa-va-drivers-freeworld
+  register: rpm_freeworld_check
+  ignore_errors: true
+
+- name: Install freeworld packages
+  ansible.builtin.shell: |
+    rpm-ostree override remove mesa-va-drivers --install mesa-va-drivers-freeworld
+    rpm-ostree override remove noopenh264 --install openh264 --install gstreamer1-plugin-openh264 --install mozilla-openh264
+  when: rpm_freeworld_check.rc != 0

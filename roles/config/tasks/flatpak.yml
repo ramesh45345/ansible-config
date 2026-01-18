@@ -12,6 +12,7 @@
       - com.github.tchx84.Flatseal
       - info.smplayer.SMPlayer
       - org.atheme.audacious
+      - org.kde.kclock
       - org.libreoffice.LibreOffice
       - org.videolan.VLC
     state: latest
