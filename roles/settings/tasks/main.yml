@@ -14,6 +14,7 @@
     pkgmgr: "{{ ansible_facts['pkg_mgr'] }}"
     virt_role: "{{ ansible_facts['virtualization_role'] }}"
     virt_type: "{{ ansible_facts['virtualization_type'] }}"
+    hostname: "{{ ansible_facts['hostname'] }}"
 
 # Set CustomScripts path
 - ansible.builtin.set_fact:

@@ -23,6 +23,7 @@
         csfolder: {{ csfolder }}
         virt_role: {{ virt_role }}
         virt_type: {{ virt_type }}
+        hostname: {{ hostname }}
   debug:
     msg: "{{ msg.split('\n') }}"
   tags: debug_info
