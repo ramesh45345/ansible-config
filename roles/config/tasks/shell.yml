@@ -1,5 +1,15 @@
 ---
 
 - name: Run shell config
-  shell: "{{ csfolder }}/CShellConfig.py -z -f"
+  ansible.builtin.shell: "{{ csfolder }}/CShellConfig.py -z -f"
+  changed_when: false
+
+- name: Run other config
+  ansible.builtin.shell: |
+    "{{ csfolder }}/Csshconfig.py"
+    "{{ csfolder }}/CDisplayManagerConfig.py"
+    "{{ csfolder }}/CVMGeneral.py"
+    "{{ csfolder }}/Cxdgdirs.py"
+    "{{ csfolder }}/Czram.py"
+    "{{ csfolder }}/CSysConfig.sh"
   changed_when: false
